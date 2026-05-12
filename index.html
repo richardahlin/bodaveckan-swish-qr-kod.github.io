@@ -1,1 +1,164 @@
-hello
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bödaveckan 2026</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── Background ── */
+    .bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('back.jpg'); /* ← replace with your image path */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: brightness(0.72);
+    }
+
+    /* ── Overlay card ── */
+    .card {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 24px;
+      padding: 3rem 3.5rem;
+      max-width: 440px;
+      width: calc(100% - 2rem);
+      text-align: center;
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.25);
+      animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(28px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)   scale(1);    }
+    }
+
+    /* ── Header ── */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+
+    h1 span {
+      display: block;
+      font-size: 0.45em;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      font-family: 'Lato', sans-serif;
+      margin-bottom: 0.3em;
+    }
+
+    /* ── Divider ── */
+    .rule {
+      width: 48px;
+      height: 1px;
+      background: rgba(255,255,255,0.45);
+    }
+
+    /* ── QR section ── */
+    .qr-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .qr-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      font-weight: 400;
+    }
+
+    .qr-frame {
+      background: #fff;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+
+    .qr-frame img {
+      display: block;
+      width: 180px;
+      height: auto;
+      border-radius: 4px;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="bg"></div>
+
+    <div class="card">
+      <h1>
+        <span>Välkommen till</span>
+        Bödaveckan<br>2026
+      </h1>
+
+      <div class="rule"></div>
+
+      <div class="qr-wrap">
+        <p class="qr-label">Betala via Swish</p>
+
+        <div class="qr-frame">
+          <img id="qr-img" src="" alt="Swish QR-kod för betalning" />
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cutoff = new Date('2026-05-20T00:00:00');
+    const isStandard = new Date() >= cutoff;
+
+    document.getElementById('qr-img').src = isStandard
+      ? 'swish-standard.png'
+      : 'swish-early-bird.png';
+
+    document.querySelector('.qr-label').textContent = isStandard
+      ? 'Betala via Swish'
+      : 'Early Bird — Betala via Swish';
+  </script>
+</body>
+</html>
