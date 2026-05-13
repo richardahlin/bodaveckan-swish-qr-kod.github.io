@@ -19,22 +19,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 2rem 0;
       position: relative;
       overflow: hidden;
     }
 
-    /* ── Background ── */
     .bg {
-      position: absolute;
+      position: fixed;
       inset: 0;
-      background-image: url('back.jpg'); /* ← replace with your image path */
+      background-image: url('back.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       filter: brightness(0.72);
+      z-index: 0;
     }
 
-    /* ── Overlay card ── */
     .card {
       position: relative;
       z-index: 2;
@@ -48,21 +48,18 @@
       border: 1px solid rgba(255, 255, 255, 0.28);
       border-radius: 24px;
       padding: clamp(1.5rem, 6vw, 3rem) clamp(1.25rem, 6vw, 3.5rem);
-      max-width: 440px;
+      max-width: 520px;
       width: calc(100% - 2rem);
       text-align: center;
-      box-shadow:
-        0 8px 32px rgba(0,0,0,0.35),
-        inset 0 1px 0 rgba(255,255,255,0.25);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
       animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     @keyframes rise {
       from { opacity: 0; transform: translateY(28px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0)   scale(1);    }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* ── Header ── */
     h1 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(2rem, 6vw, 3rem);
@@ -84,11 +81,34 @@
       margin-bottom: 0.3em;
     }
 
-    /* ── Divider ── */
     .rule {
       width: 48px;
       height: 1px;
       background: rgba(255,255,255,0.45);
+      flex-shrink: 0;
+    }
+
+    .qr-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      font-weight: 400;
+      min-height: 1em;
+    }
+
+    .qr-frame {
+      background: #fff;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+
+    .qr-frame img {
+      display: block;
+      width: clamp(140px, 40vw, 200px);
+      height: auto;
+      border-radius: 4px;
     }
 
     .qr-manual {
@@ -107,36 +127,142 @@
       color: #fff;
       font-size: 1.05em;
     }
-    .qr-wrap {
+
+    .switch-link {
+      font-size: clamp(0.95rem, 3vw, 1.05rem);
+      color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      background: rgba(255,255,255,0.18);
+      border: 1.5px solid rgba(255,255,255,0.45);
+      border-radius: 10px;
+      padding: 0.85rem 1.25rem;
+      font-family: 'Lato', sans-serif;
+      font-weight: 400;
+      width: 100%;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      letter-spacing: 0.01em;
+      line-height: 1.4;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    }
+
+    .switch-link:hover {
+      background: rgba(255,255,255,0.28);
+      border-color: rgba(255,255,255,0.7);
+      transform: translateY(-1px);
+    }
+
+    .switch-link:active {
+      transform: translateY(1px);
+    }
+
+    #view-week {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 1.5rem;
+      width: 100%;
     }
 
-    .qr-label {
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
+    #view-camp {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      width: 100%;
+    }
+
+    .camp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .camp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      width: 100%;
+    }
+
+    @media (max-width: 360px) {
+      .camp-grid { grid-template-columns: 1fr; }
+    }
+
+    .camp-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .camp-item-label {
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      font-weight: 400;
+    }
+
+    .camp-item .qr-frame img {
+      width: clamp(110px, 28vw, 160px);
+    }
+
+    .camp-manual {
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      color: rgba(255,255,255,0.9);
+      line-height: 1.75;
+      text-align: center;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 12px;
+      padding: 0 1.25rem;
+      width: 100%;
+    }
+
+    .camp-manual strong { color: #fff; }
+
+    .camp-row {
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .camp-prices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      width: 100%;
+    }
+
+    .camp-price-item {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 12px;
+      padding: 0.85rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .camp-price-days {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.65);
       font-weight: 400;
     }
 
-    .qr-frame {
-      background: #fff;
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    .camp-price-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 4vw, 1.75rem);
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      line-height: 1;
     }
-
-    .qr-frame img {
-      display: block;
-      width: clamp(140px, 40vw, 200px);
-      height: auto;
-      border-radius: 4px;
-    }
-
-
   </style>
 </head>
 <body>
@@ -151,17 +277,49 @@
 
       <div class="rule"></div>
 
-      <div class="qr-wrap">
-        <p class="qr-label"></p>
+      <!-- Week view -->
+      <div id="view-week">
+        <p class="qr-label" id="week-label"></p>
 
         <div class="qr-frame">
-          <img id="qr-img" src="" alt="Swish QR-kod för betalning" />
+          <img id="week-qr" src="" alt="Swish QR-kod för betalning" />
         </div>
 
-        <p class="qr-manual" id="qr-manual"></p>
+        <p class="qr-manual" id="week-manual"></p>
 
-
+        <button class="switch-link" onclick="showCamp()">
+          Klicka här för 1- och 2-dagars roundnet camp →
+        </button>
       </div>
+
+      <!-- Camp view -->
+      <div id="view-camp">
+        <p class="camp-title">Enbart Roundnet Camp</p>
+
+        <p class="qr-label" id="camp-label"></p>
+
+        <div class="camp-grid">
+          <div class="camp-item">
+            <div class="qr-frame">
+              <img id="camp-qr-1dag" src="" alt="Swish QR 1 dag" />
+            </div>
+          </div>
+          <div class="camp-item">
+            <div class="qr-frame">
+              <img id="camp-qr-2dag" src="" alt="Swish QR 2 dagar" />
+            </div>
+          </div>
+        </div>
+
+        <div class="camp-prices" id="camp-prices"></div>
+
+        <p class="camp-manual" id="camp-manual"></p>
+
+        <button class="switch-link" onclick="showWeek()">
+          Gå tillbaka till priset för hela veckan
+        </button>
+      </div>
+
     </div>
   </div>
 
@@ -169,17 +327,38 @@
     const cutoff = new Date('2026-05-20T00:00:00');
     const isStandard = new Date() >= cutoff;
 
-    document.getElementById('qr-img').src = isStandard
-      ? 'swish-standard.png'
-      : 'swish-early-bird.png';
-
-    document.querySelector('.qr-label').textContent = isStandard
-      ? ''
-      : 'Early Bird — Fram t.o.m. 19 maj';
-
-    document.getElementById('qr-manual').innerHTML = isStandard
+    // Week view
+    document.getElementById('week-qr').src = isStandard ? 'swish-standard.png' : 'swish-early-bird.png';
+    document.getElementById('week-label').textContent = isStandard ? '' : 'Early Bird — Fram t.o.m. 19 maj';
+    document.getElementById('week-manual').innerHTML = isStandard
       ? 'Eller swisha <strong>1 250 kr</strong> till<br><strong>123 695 24 77</strong><br>med meddelande <strong>"Bödaveckan 2026"</strong>'
       : 'Eller swisha <strong>1 100 kr</strong> till<br><strong>123 695 24 77</strong><br>med meddelande <strong>"Bödaveckan 2026 - Early Bird"</strong>';
+
+    // Camp view
+    document.getElementById('camp-qr-1dag').src = isStandard ? 'swish-1dag-standard.png' : 'swish-1dag-early.png';
+    document.getElementById('camp-qr-2dag').src = isStandard ? 'swish-2dag-standard.png' : 'swish-2dag-early.png';
+    document.getElementById('camp-label').textContent = isStandard ? '' : 'Early Bird — Fram t.o.m. 19 maj';
+    document.getElementById('camp-prices').innerHTML = isStandard
+      ? '<div class="camp-price-item"><span class="camp-price-days">1 dag</span><span class="camp-price-amount">495 kr</span></div>'
+      + '<div class="camp-price-item"><span class="camp-price-days">2 dagar</span><span class="camp-price-amount">990 kr</span></div>'
+      : '<div class="camp-price-item"><span class="camp-price-days">1 dag</span><span class="camp-price-amount">440 kr</span></div>'
+      + '<div class="camp-price-item"><span class="camp-price-days">2 dagar</span><span class="camp-price-amount">880 kr</span></div>';
+
+    document.getElementById('camp-manual').innerHTML = isStandard
+      ? '<div class="camp-row"><strong>1 dag:</strong><br>Swisha <strong>495 kr</strong> till<br><strong>123 695 24 77</strong><br>med meddelande <strong>"Bödaveckan 2026 - Camp 1 dag"</strong></div>'
+      + '<div class="camp-row"><strong>2 dagar:</strong><br>Swisha <strong>990 kr</strong> till<br><strong>123 695 24 77</strong><br>med meddelande <strong>"Bödaveckan 2026 - Camp 2 dagar"</strong></div>'
+      : '<div class="camp-row"><strong>1 dag:</strong><br>Swisha <strong>440 kr</strong> till<br><strong>123 695 24 77</strong><br>med meddelande <strong>"Bödaveckan 2026 - Camp 1 dag - Early Bird"</strong></div>'
+      + '<div class="camp-row"><strong>2 dagar:</strong><br>Swisha <strong>880 kr</strong> till<br><strong>123 695 24 77</strong><br>med meddelande <strong>"Bödaveckan 2026 - Camp 2 dagar - Early Bird"</strong></div>';
+
+    function showCamp() {
+      document.getElementById('view-week').style.display = 'none';
+      document.getElementById('view-camp').style.display = 'flex';
+    }
+
+    function showWeek() {
+      document.getElementById('view-camp').style.display = 'none';
+      document.getElementById('view-week').style.display = 'flex';
+    }
   </script>
 </body>
 </html>
